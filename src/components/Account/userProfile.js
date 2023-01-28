@@ -81,7 +81,7 @@ export default function UserProfile() {
         <ThemeProvider theme={theme}>
             <Container component="main">
                 <Grid container id="1" sx={{ display: 'flex grow' }}>
-                    <Grid item xs={5} sx={{ marginRight: 1 }} >
+                    <Grid item xs={3} sx={{ marginRight: 1 }} >
 
                         <Box component="form" noValidate onSubmit={handleSubmit}
                             sx={{
@@ -116,7 +116,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -133,7 +133,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -150,7 +150,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -165,7 +165,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                                 renderInput={(params) => <TextField {...params} label="Estado Civil" />}
                                             />
@@ -183,7 +183,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -198,7 +198,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                                 renderInput={(params) => <TextField {...params} label="Condicion Laboral" />}
                                             />
@@ -216,14 +216,14 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 80,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
-                                        <Stack direction="row" spacing={15}
+                                        <Stack direction="row" spacing={5}
                                             sx={{
                                                 m: 'auto',
-                                                width: 300
+                                                width: 200
                                             }}>
                                             <Button type="submit" variant="contained" color="success">
                                                 Guardar
@@ -241,7 +241,7 @@ export default function UserProfile() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={4}sx={{ marginRight: 1 }}>
 
                         <Box component="form" noValidate onSubmit={handleSubmit}
                             sx={{
@@ -347,10 +347,10 @@ export default function UserProfile() {
                                                 renderInput={(params) => <TextField {...params} label="Posee personas con dependencia economica" />}
                                             />
                                         </Grid>
-                                        <Stack direction="row" spacing={15}
+                                        <Stack direction="row" spacing={5}
                                             sx={{
                                                 m: 'auto',
-                                                width: 300
+                                                width: 200
                                             }}>
                                             <Button type="submit" variant="contained" color="success">
                                                 Guardar
@@ -368,7 +368,7 @@ export default function UserProfile() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={5} sx={{ marginRight: 1 }}>
+                    <Grid item xs={4} sx={{ marginRight: 1 }}>
 
                         <Box component="form" noValidate onSubmit={handleSubmit}
                             sx={{
@@ -386,9 +386,18 @@ export default function UserProfile() {
                                             color="inherit"
                                             noWrap
                                             align="center"
-                                            sx={{ flexGrow: 1, height: 80 }}
+                                            sx={{ flexGrow: 1, height: 40 }}
                                         >
-                                            Perfil de Salud
+                                            Perfil de
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
+                                            color="inherit"
+                                            noWrap
+                                            align="center"
+                                            sx={{ flexGrow: 1, height: 50 }}
+                                        >
+                                            Salud
                                         </Typography>
                                         <Grid item>
                                         <Autocomplete
@@ -457,10 +466,10 @@ export default function UserProfile() {
                                                 }}
                                             />
                                         </Grid>
-                                        <Stack direction="row" spacing={15}
+                                        <Stack direction="row" spacing={5}
                                             sx={{
                                                 m: 'auto',
-                                                width: 300
+                                                width: 200
                                             }}>
                                             <Button type="submit" variant="contained" color="success">
                                                 Guardar
@@ -478,7 +487,7 @@ export default function UserProfile() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={5}>
+                    <Grid item xs={12}>
 
                         <Box component="form" noValidate onSubmit={handleSubmit}
                             sx={{
@@ -515,7 +524,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -534,7 +543,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -553,7 +562,7 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
@@ -572,14 +581,14 @@ export default function UserProfile() {
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 300
+                                                    width: 200
                                                 }}
                                             />
                                         </Grid>
-                                        <Stack direction="row" spacing={15}
+                                        <Stack direction="row" spacing={5}
                                             sx={{
                                                 m: 'auto',
-                                                width: 300
+                                                width: 200
                                             }}>
                                             <Button type="submit" variant="contained" color="success">
                                                 Guardar
