@@ -29,26 +29,18 @@ function Copyright(props) {
 const theme = createTheme();
 
 const setDataLS = (data) =>{
-  localStorage.setItem('id',data.data.data.id);
-  localStorage.setItem('nombre',data.data.data.nombre);
-  localStorage.setItem('apellido',data.data.data.apellido);
-  localStorage.setItem('email',data.data.data.email);
-  localStorage.setItem('otpHabilitado',data.data.data.otp_habilitado);
+  localStorage.setItem('token',data.data.token);
 }
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const [token, setToken] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const handleClose = () => setOpenModal(false);
-  const handleOpen = () => setOpenModal(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     try{
         axios
-        .post("http://localhost:3010/users/login", {
+        .post("http://localhost:3020/users/login", {
             email: data.get('email'),
             password: data.get('password'),
         })
@@ -58,38 +50,12 @@ export default function SignInSide() {
         .then((response) => {
           if (response.data.message === "OK") {
             setDataLS(response.data);
-          }
-          if (localStorage.getItem('otpHabilitado') === "false") {
             navigate('/home');
-          } else {
-            handleOpen();
           }
         });
       }catch(err){
         alert(err);
       }
-  };
-
-  const validateOTP = (event) => {
-    event.preventDefault();
-    const usuarioId = localStorage.getItem('id');
-    try {
-        axios
-            .post(`http://localhost:3010/users/otp/validate/${usuarioId}`, {
-                token: token
-            })
-            .catch(function (error) {
-                alert('Código incorrecto');
-            })
-            .then((res) => {
-                const { data } = res;
-                if (data.message === "OK") {
-                    setOpenModal(false);
-                    navigate('/home');
-            }});
-    } catch (err) {
-        alert(err);
-    }
   };
 
   return (
@@ -155,49 +121,6 @@ export default function SignInSide() {
               >
                 Ingresa
               </Button>
-              {localStorage.getItem('otpHabilitado') === "true" ? (
-                <Modal
-                  open={openModal}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box variant="rounded"
-                    sx={{
-                        position: 'absolute',
-                        top: '40%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: 400,
-                        bgcolor: 'background.paper',
-                        border: 2,
-                        borderRadius: 2,
-                        p: 4,
-                        textAlign: 'center'
-                    }}
-                  >
-                    <Typography variant="h6" sx={{ m: 1 }}>
-                      Verificar Código
-                    </Typography>
-                    <TextField
-                      id="token"
-                      name="token"
-                      onChange={(e) => setToken(e.target.value)}
-                      sx={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          m: 'auto',
-                          height: 80,
-                          width: 300
-                      }}
-                    />
-                    <Button variant="contained" color="success" onClick={validateOTP}
-                      sx={{ m: 'auto', maxWidth: 300 }}>
-                      Validar
-                    </Button>
-                  </Box>
-                </Modal>
-              ) : ('')}
               <Grid container>
                 <Grid item>
                   <Link href="/register" variant="body2">

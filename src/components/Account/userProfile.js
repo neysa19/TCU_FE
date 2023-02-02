@@ -10,6 +10,7 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
+import jwt_decode from "jwt-decode";
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -26,23 +27,15 @@ export default function UserProfile() {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        setCivil("Solter@");
-        axios
-            .get(`http://localhost:3010/users/${usuarioId}`, {
-                headers: {
-                }
-            })
-            .then((res) => {
-                const { data } = res;
-                setFirstName(data.data.nombre);
-                setLastName(data.data.apellido);
-                setEmail(data.data.email);
-                setCivil(data.data.estado_civil);
-                setCondicionesLaborales(data.data.condiciones_laborales);
-
-
-            });
-    }, [usuarioId]);
+        const token = localStorage.getItem('token');
+        const decoded = jwt_decode(token);
+        console.log(decoded);
+        setFirstName(decoded.user.name);
+        setLastName(decoded.user.first_last_name);
+        setEmail(decoded.user.email);
+        setCivil();
+        setCondicionesLaborales();
+    }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -241,7 +234,7 @@ export default function UserProfile() {
                             </Grid>
                         </Box>
                     </Grid>
-                    <Grid item xs={4}sx={{ marginRight: 1 }}>
+                    <Grid item xs={4} sx={{ marginRight: 1 }}>
 
                         <Box component="form" noValidate onSubmit={handleSubmit}
                             sx={{
@@ -336,7 +329,7 @@ export default function UserProfile() {
                                                 onChange={(event, value) => setCondicionesLaborales(value.label)}
                                                 disablePortal
                                                 id="condiciones_laborales"
-                                                options={[{label:"Si"},{label:"No"}]}
+                                                options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -400,11 +393,11 @@ export default function UserProfile() {
                                             Salud
                                         </Typography>
                                         <Grid item>
-                                        <Autocomplete
+                                            <Autocomplete
                                                 onChange={(event, value) => setCondicionesLaborales(value.label)}
                                                 disablePortal
                                                 id="discapacidad"
-                                                options={[{label:"Si"},{label:"No"}]}
+                                                options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -416,11 +409,11 @@ export default function UserProfile() {
                                             />
                                         </Grid>
                                         <Grid item>
-                                        <Autocomplete
+                                            <Autocomplete
                                                 onChange={(event, value) => setCondicionesLaborales(value.label)}
                                                 disablePortal
                                                 id="discapacidad"
-                                                options={[{label:"Si"},{label:"No"}]}
+                                                options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -432,11 +425,11 @@ export default function UserProfile() {
                                             />
                                         </Grid>
                                         <Grid item>
-                                        <Autocomplete
+                                            <Autocomplete
                                                 onChange={(event, value) => setCondicionesLaborales(value.label)}
                                                 disablePortal
                                                 id="discapacidad"
-                                                options={[{label:"Si"},{label:"No"}]}
+                                                options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -510,7 +503,7 @@ export default function UserProfile() {
                                             Perfil financiero y objetivos
                                         </Typography>
                                         <Grid item>
-                                        <TextField
+                                            <TextField
                                                 id="corto_plazo"
                                                 name="corto_plazo"
                                                 label="Objetivos financieros a corto plazo"
@@ -529,7 +522,7 @@ export default function UserProfile() {
                                             />
                                         </Grid>
                                         <Grid item>
-                                        <TextField
+                                            <TextField
                                                 id="mediano_plazo"
                                                 name="mediano_plazo"
                                                 label="Objetivos financieros a mediano plazo"
@@ -548,7 +541,7 @@ export default function UserProfile() {
                                             />
                                         </Grid>
                                         <Grid item>
-                                        <TextField
+                                            <TextField
                                                 id="largo_plazo"
                                                 name="largo_plazo"
                                                 label="Objetivos financieros a largo plazo"
@@ -567,7 +560,7 @@ export default function UserProfile() {
                                             />
                                         </Grid>
                                         <Grid item>
-                                        <TextField
+                                            <TextField
                                                 id="diagnostico_cualitativo"
                                                 name="diagnostico_cualitativo"
                                                 label="Diagnostico cualitativo de Bienestar Financiero"

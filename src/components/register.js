@@ -41,10 +41,10 @@ export default function SignUp() {
         });
         try {
             axios
-                .post("http://localhost:3010/users", {
+                .post("http://localhost:3020/users", {
                     email: data.get('email'),
-                    firstName: data.get('firstName'),
-                    lastName: data.get('lastName'),
+                    name: data.get('firstName'),
+                    first_last_name: data.get('lastName'),
                     password: data.get('password'),
                 })
                 .catch(function (error) {

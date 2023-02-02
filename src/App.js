@@ -15,7 +15,7 @@ function App() {
         }
         <Route exact path="/home" element = {<Home/>}/>
 
-        <Route exact path="/users/:id" element = {<ProtectedRoutes><Account/></ProtectedRoutes>}/>
+        <Route exact path="/users/:id" element = {<Account/>}/>
       </Routes>
     </>
   ); 
