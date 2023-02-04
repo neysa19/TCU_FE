@@ -116,7 +116,7 @@ export default function AccountContent() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            SIRU Financiero
+                            TCU-408 Educacion Financiera
                         </Typography>
                         <IconButton color="inherit">
                             <UserAvatar />

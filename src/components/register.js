@@ -10,7 +10,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Copyright(props) {
     return (
@@ -39,30 +41,49 @@ export default function SignUp() {
             lastname: data.get('lastName'),
             password: data.get('password'),
         });
-        try {
-            axios
-                .post("http://localhost:3020/users", {
-                    email: data.get('email'),
-                    name: data.get('firstName'),
-                    first_last_name: data.get('lastName'),
-                    password: data.get('password'),
-                })
-                .catch(function (error) {
-                    alert(error.response.data.data);
-                })
-                .then((response) => {
-                    if (response.data.message === "Created") {
-                        alert("User Created")
-                        navigate('/');
-                }});
-        } catch (err) {
-            alert(err);
+        if (data.get('email').includes('est.utn.ac.cr')) {
+            try {
+                axios
+                    .post("http://localhost:3020/users", {
+                        email: data.get('email'),
+                        name: data.get('firstName'),
+                        first_last_name: data.get('lastName'),
+                        password: data.get('password'),
+                    })
+                    .catch(function (error) {
+                        alert(error.response.message);
+                    })
+                    .then((response) => {
+                        if (response.data.message === "Created") {
+                            toast.success(`Usuario creado`)
+                            navigate('/');
+                        }
+                    });
+            } catch (err) {
+                alert(err);
+            }
+
+        } else {
+            toast.error("Dominio de correo invalido, favor utilizar correo institucional UTN");
         }
+
     };
 
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
                 <CssBaseline />
                 <Box
                     sx={{

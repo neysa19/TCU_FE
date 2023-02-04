@@ -90,7 +90,7 @@ export default function SignInSide() {
                 $
             </Avatar>
             <Typography component="h1" variant="h5">
-              Bienvenido a SIRU Financiero
+              Bienvenido a TCU-408 Educacion Financiera
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
