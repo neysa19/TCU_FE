@@ -23,7 +23,10 @@ import MainDashboard from './dashboard';
 import ColaPost from './ColaPost';
 import CrearPost from './crearPost';
 import Schedule from './schedule';
-
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import HouseIcon from '@mui/icons-material/House';
+import SavingsIcon from '@mui/icons-material/Savings';
 const drawerWidth = 260;
 
 const AppBar = styled(MuiAppBar, {
@@ -163,31 +166,31 @@ function DashboardContent() {
 
                             <ListItemButton onClick={handleClick('Dashboard')}>
                                 <ListItemIcon>
-                                    <DashboardIcon />
+                                    <InsertEmoticonIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Casilla Feliz" />
                             </ListItemButton>
                             <ListItemButton onClick={handleClick('CrearPost')}>
                                 <ListItemIcon>
-                                    <CreateIcon />
+                                    <AccountBalanceIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Plan de deuda" />
                             </ListItemButton>
                             <ListItemButton onClick={handleClick('ColaPost')}>
                                 <ListItemIcon>
-                                    <QueueIcon />
+                                    <HouseIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Patrimonio" />
                             </ListItemButton>
                             <ListItemButton onClick={handleClick('Schedule')}>
                                 <ListItemIcon>
-                                    <ScheduleIcon />
+                                    <SavingsIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Presupuesto" />
                             </ListItemButton>
                             <ListItemButton onClick={handleClick('Schedule')}>
                                 <ListItemIcon>
-                                    <ScheduleIcon />
+                                    <CreateIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Razones" />
                             </ListItemButton>

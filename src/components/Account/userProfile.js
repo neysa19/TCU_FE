@@ -24,6 +24,25 @@ export default function UserProfile() {
     const [civil, setCivil] = useState("");
     const [condicionesLaborales, setCondicionesLaborales] = useState("");
     const [lastName, setLastName] = useState("");
+    const [secondLastName, setSecondLastName] = useState("");
+    const [cedula, setCedula] = useState("");
+    const [nacionalidad, setNacionalidad] = useState("");
+    const [gradoAcademico, setGradoAcademico] = useState("");
+    const [birthday, setBirthday] = useState("");
+    const [genero, setGenero] = useState("");
+    const [familiaCantidad, setFamiliaCantidad] = useState("");
+    const [familiaIngresoBruto, setFamiliaIngresoBruto] = useState("");
+    const [familiaIngresoNeto, setFamiliaIngresoNeto] = useState("");
+    const [familiaIngresoAdicional, setFamiliaIngresoAdicional] = useState("");
+    const [familiaDependencia, setFamiliaDependencia] = useState("");
+    const [saludDiscapacidad, setSaludDiscapacidad] = useState("");
+    const [saludCronica, setSaludCronica] = useState("");
+    const [saludTerminal, setSaludTerminal] = useState("");
+    const [saludDetalles, setSaludDetalles] = useState("");
+    const [objCorto, setObjCorto] = useState("");
+    const [objLargo, setObjLargo] = useState("");
+    const [objMediano, setObjMediano] = useState("");
+    const [objDiagnostico, setObjDiagnostico] = useState("");
     const [email, setEmail] = useState("");
 
     useEffect(() => {
@@ -35,6 +54,7 @@ export default function UserProfile() {
         setEmail(decoded.user.email);
         setCivil();
         setCondicionesLaborales();
+
     }, []);
 
     const handleSubmit = (event) => {
@@ -135,9 +155,9 @@ export default function UserProfile() {
                                                 id="age"
                                                 name="age"
                                                 label="Edad"
-                                                value={firstName}
+                                                value={birthday}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setBirthday(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -168,9 +188,9 @@ export default function UserProfile() {
                                                 id="country"
                                                 name="country"
                                                 label="Nacionalidad"
-                                                value={email}
+                                                value={nacionalidad}
                                                 required
-                                                onChange={(e) => setEmail(e.target.value)}
+                                                onChange={(e) => setNacionalidad(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -201,9 +221,9 @@ export default function UserProfile() {
                                                 id="school"
                                                 name="school"
                                                 label="Grado Academico"
-                                                value={email}
+                                                value={gradoAcademico}
                                                 required
-                                                onChange={(e) => setEmail(e.target.value)}
+                                                onChange={(e) => setGradoAcademico(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -261,9 +281,9 @@ export default function UserProfile() {
                                                 id="cantidad_personas"
                                                 name="cantidad_personas"
                                                 label="Cantidad de Personas en la familia"
-                                                value={firstName}
+                                                value={familiaCantidad}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setFamiliaCantidad(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -278,9 +298,9 @@ export default function UserProfile() {
                                                 id="ingreso_bruto"
                                                 name="ingreso_bruto"
                                                 label="Ingreso Bruto Mensual"
-                                                value={lastName}
+                                                value={familiaIngresoBruto}
                                                 required
-                                                onChange={(e) => setLastName(e.target.value)}
+                                                onChange={(e) => setFamiliaIngresoBruto(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -295,9 +315,9 @@ export default function UserProfile() {
                                                 id="ingreso_neto"
                                                 name="ingreso_neto"
                                                 label="Ingreso Neto Mensual"
-                                                value={firstName}
+                                                value={familiaIngresoNeto}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setFamiliaIngresoNeto(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -312,9 +332,9 @@ export default function UserProfile() {
                                                 id="ingreso_adicional"
                                                 name="ingreso_adicional"
                                                 label="Ingresos adicionales"
-                                                value={firstName}
+                                                value={familiaIngresoAdicional}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setFamiliaIngresoAdicional(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -326,9 +346,9 @@ export default function UserProfile() {
                                         </Grid>
                                         <Grid item>
                                             <Autocomplete
-                                                onChange={(event, value) => setCondicionesLaborales(value.label)}
+                                                onChange={(event, value) => setFamiliaDependencia(value.label)}
                                                 disablePortal
-                                                id="condiciones_laborales"
+                                                id="dependencia_economica"
                                                 options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
@@ -394,7 +414,7 @@ export default function UserProfile() {
                                         </Typography>
                                         <Grid item>
                                             <Autocomplete
-                                                onChange={(event, value) => setCondicionesLaborales(value.label)}
+                                                onChange={(event, value) => setSaludDiscapacidad(value.label)}
                                                 disablePortal
                                                 id="discapacidad"
                                                 options={[{ label: "Si" }, { label: "No" }]}
@@ -410,9 +430,9 @@ export default function UserProfile() {
                                         </Grid>
                                         <Grid item>
                                             <Autocomplete
-                                                onChange={(event, value) => setCondicionesLaborales(value.label)}
+                                                onChange={(event, value) => setSaludCronica(value.label)}
                                                 disablePortal
-                                                id="discapacidad"
+                                                id="cronicas"
                                                 options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
@@ -426,9 +446,9 @@ export default function UserProfile() {
                                         </Grid>
                                         <Grid item>
                                             <Autocomplete
-                                                onChange={(event, value) => setCondicionesLaborales(value.label)}
+                                                onChange={(event, value) => setSaludTerminal(value.label)}
                                                 disablePortal
-                                                id="discapacidad"
+                                                id="terminal"
                                                 options={[{ label: "Si" }, { label: "No" }]}
                                                 sx={{
                                                     display: 'flex',
@@ -447,9 +467,9 @@ export default function UserProfile() {
                                                 label="Detalle la condicion de salud"
                                                 multiline
                                                 rows={4}
-                                                value={firstName}
+                                                value={saludDetalles}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setSaludDetalles(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
@@ -509,15 +529,15 @@ export default function UserProfile() {
                                                 label="Objetivos financieros a corto plazo"
                                                 multiline
                                                 rows={4}
-                                                value={firstName}
+                                                value={objCorto}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setObjCorto(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 200
+                                                    width: 600
                                                 }}
                                             />
                                         </Grid>
@@ -528,15 +548,15 @@ export default function UserProfile() {
                                                 label="Objetivos financieros a mediano plazo"
                                                 multiline
                                                 rows={4}
-                                                value={firstName}
+                                                value={objMediano}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setObjMediano(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 200
+                                                    width: 600
                                                 }}
                                             />
                                         </Grid>
@@ -547,15 +567,15 @@ export default function UserProfile() {
                                                 label="Objetivos financieros a largo plazo"
                                                 multiline
                                                 rows={4}
-                                                value={firstName}
+                                                value={objLargo}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setObjLargo(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 200
+                                                    width: 600
                                                 }}
                                             />
                                         </Grid>
@@ -566,15 +586,15 @@ export default function UserProfile() {
                                                 label="Diagnostico cualitativo de Bienestar Financiero"
                                                 multiline
                                                 rows={4}
-                                                value={firstName}
+                                                value={objDiagnostico}
                                                 required
-                                                onChange={(e) => setFirstName(e.target.value)}
+                                                onChange={(e) => setObjDiagnostico(e.target.value)}
                                                 sx={{
                                                     display: 'flex',
                                                     flexDirection: 'column',
                                                     m: 'auto',
                                                     height: 150,
-                                                    width: 200
+                                                    width: 600
                                                 }}
                                             />
                                         </Grid>

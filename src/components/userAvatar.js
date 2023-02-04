@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 export default function UserAvatar() {
   const navigate = useNavigate();
-  const usuarioId = localStorage.getItem('id');
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -24,9 +23,13 @@ export default function UserAvatar() {
     navigate('/');
 
   };
+  const handleHome = () => {
+    navigate('/home');
+
+  };
 
   const handleProfile = () => {
-    navigate(`/users/${usuarioId}`);
+    navigate(`/users/profile`);
   };
 
   return (
@@ -56,8 +59,14 @@ export default function UserAvatar() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
+        
+        {window.location.pathname === '/home' ? 
         <MenuItem onClick={handleProfile}>Perfil</MenuItem>
-        <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+        : 
+        <MenuItem onClick={handleHome}>Pag Principal</MenuItem> 
+        }
+        <MenuItem onClick={handleLogOut}>Cerrar sesion</MenuItem>
+
       </Menu>
     </div>
 
