@@ -49,7 +49,7 @@ export default function UserProfile() {
     const token = localStorage.getItem('token');
     const decoded = jwt_decode(token);
     const usuarioId = decoded.user._id;
-
+    localStorage.setItem('usuarioId', usuarioId);
     useEffect(() => {
         setFirstName(decoded.user.name);
         setLastName(decoded.user.first_last_name);

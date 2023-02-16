@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 function Copyright(props) {
   return (
@@ -30,6 +31,10 @@ const theme = createTheme();
 
 const setDataLS = (data) =>{
   localStorage.setItem('token',data.data.token);
+  const decoded = jwt_decode(data.data.token);
+  const usuarioId = decoded.user._id;
+  localStorage.setItem('usuarioId', usuarioId);
+
 }
 
 export default function SignInSide() {
