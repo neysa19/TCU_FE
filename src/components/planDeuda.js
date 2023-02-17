@@ -38,7 +38,9 @@ export default function PlanDeuda() {
           if (response.data.message === "Created") {
             console.log(response.data.data)
             toast.success(`Deuda creada`)
-            window.location.reload();
+            setTimeout(function () {
+              window.location.reload();
+          }, 2000);
           }
         });
     } catch (err) {
@@ -65,36 +67,36 @@ export default function PlanDeuda() {
 
   }, []);
   const columns = [
-    { field: 'emisor', headerName: 'Emisor', width: 90 },
+    { field: 'emisor', headerName: 'Emisor', width: 150 },
     {
       field: 'saldoActual',
       headerName: 'Saldo Actual',
-      width: 90,
+      width: 150,
     },
     {
       field: 'tasaActual',
       headerName: 'Tasa Actual',
-      width: 90,
+      width: 150,
     },
     {
       field: 'plazoActual',
       headerName: 'Plazo Actual',
-      width: 90,
+      width: 150,
     },
     {
       field: 'descripcion',
       headerName: 'Descripcion',
-      width: 90,
+      width: 190,
     },
     {
       field: 'ponderado_tasa',
       headerName: 'Ponderado Tasa',
-      width: 90,
+      width: 150,
     },
     {
       field: 'ponderazo_plazo',
       headerName: 'Ponderado Plazo',
-      width: 90,
+      width: 150,
     },
   ];
   const rows = deudas;
@@ -122,7 +124,7 @@ export default function PlanDeuda() {
               p: 2,
               display: 'flex',
               flexDirection: 'column',
-              height: 325,
+              height: 500,
               width: '100%'
             }}
           >

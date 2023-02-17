@@ -10,6 +10,8 @@ import { AddTransactionDialog } from './casillaFelizDialog';
 import Box from '@mui/material/Box';
 import MonthBox from './monthBox';
 import { Typography } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function MainDashboard() {
     //const navigate = useNavigate();
@@ -62,7 +64,10 @@ export default function MainDashboard() {
                     console.log(response);
                     if (response.data.message === "Created") {
                         console.log(response.data.data)
-                        window.location.reload();
+                        toast.success(`Transaccion creada`)
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
                     }
                 });
         } catch (err) {
@@ -73,6 +78,18 @@ export default function MainDashboard() {
     return (
         <Container>
             <Paper>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
                 <Grid container>
                     <Grid item>
                         <Typography variant="h6" sx={{ display: "flex", m: 3 }}>
@@ -111,7 +128,7 @@ export default function MainDashboard() {
                     <AddTransactionDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
 
                 </Grid>
-                <Box sx={{m:1}}>
+                <Box sx={{ m: 1 }}>
                     <Grid container wrap="nowrap" sx={{ overflow: "auto" }} >
                         <Grid item sx={{ minWidth: 300 }} id="1">
                             <MonthBox transactions={transactions} month={"Enero"} />
