@@ -1,97 +1,110 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Autocomplete from '@mui/material/Autocomplete';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+} from '@mui/material';
 
-export default function MyFormDialog({ open, onClose, onSubmit }) {
-    const [formValues, setFormValues] = useState({
-        descripcion: '',
-        monto: '',
-        category: '',
-    });
+export const AddTransactionDialog = (props) => {
 
-    const handleInputChange = (event) => {
-        setFormValues({
-            ...formValues,
-            [event.target.name]: event.target.value,
-        });
+    const { open, onClose, onSubmit } = props;
+    const [amount, setAmount] = useState('');
+    const [description, setDescription] = useState('');
+    const [category, setCategory] = useState('');
+    const [month, setMonth] = useState('');
+
+    const handleAmountChange = (event) => {
+        setAmount(event.target.value);
+    };
+
+    const handleDescriptionChange = (event) => {
+        setDescription(event.target.value);
+    };
+
+    const handleCategoryChange = (event) => {
+        setCategory(event.target.value);
+    };
+
+    const handleMonthChange = (event) => {
+        setMonth(event.target.value);
     };
 
     const handleSubmit = () => {
-
-        onSubmit(formValues);
+        onSubmit({ amount, description, category, month });
         onClose();
-
     };
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Agregar transacción</DialogTitle>
-            <DialogContent>
-                <FormControl>
-                    <FormLabel id="category">Categoria</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="category"
-                        name="category"
-                        value={formValues.category}
-                        onChange={handleInputChange}
+            <DialogTitle>Agregar Transacción</DialogTitle>
+            <DialogContent sx={{m:1, width:400}}>
+            <FormControl fullWidth margin="dense">
+                    <InputLabel id="category-label">Categoria</InputLabel>
+                    <Select
+                        labelId="category-label"
+                        value={category}
+                        onChange={handleCategoryChange}
+                        sx={{m:1, width:300}}
                     >
-                        <FormControlLabel value="Salario Neto" control={<Radio />} label="Salario Neto" />
-                        <FormControlLabel value="Otros ingresos" control={<Radio />} label="Otros ingresos" />
-                        <FormControlLabel value="Ahorros" control={<Radio />} label="Ahorros" />
-                        <FormControlLabel value="Deudas" control={<Radio />} label="Deudas" />
-                        <FormControlLabel value="Gastos Recurrentes" control={<Radio />} label="Gastos Recurrentes" />
-                    </RadioGroup>
+                        <MenuItem value="Salario Neto">Salario Neto</MenuItem>                        
+                        <MenuItem value="Otros Ingresos">Otros Ingresos</MenuItem>
+                        <MenuItem value="Ahorro">Ahorro</MenuItem>
+                        <MenuItem value="Deudas">Deudas</MenuItem>
+                        <MenuItem value="Gastos Recurrentes">Gastos Recurrentes</MenuItem>
+                    </Select>
                 </FormControl>
+
                 <TextField
-                    name="monto"
-                    label="Monto"
-                    value={formValues.monto}
-                    onChange={handleInputChange}
-                    fullWidth
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        mt: 3,
-                        height: 80,
-                        width: 300
-                    }}
+                    margin="dense"
+                    label="Descripcion"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    sx={{m:1, width:300}}
                 />
-                {formValues.category !== "Salario Neto" ?
-                    <TextField
-                        name="descripcion"
-                        label="Descripcion"
-                        value={formValues.descripcion}
-                        onChange={handleInputChange}
-                        fullWidth
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            mt: 1,
-                            height: 80,
-                            width: 300
-                        }}
-                    /> : null}
-
-
+                
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Monto"
+                    type="number"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    fullWidth
+                    sx={{m:1, width:300}}
+                />
+                <FormControl fullWidth margin="dense">
+                    <InputLabel id="month-label">Mes</InputLabel>
+                    <Select
+                        labelId="month-label"
+                        value={month}
+                        onChange={handleMonthChange}
+                        sx={{m:1, width:300}}
+                    >
+                        <MenuItem value="Enero">Enero</MenuItem>
+                        <MenuItem value="Febrero">Febrero</MenuItem>
+                        <MenuItem value="Marzo">Marzo</MenuItem>
+                        <MenuItem value="Abril">Abril</MenuItem>
+                        <MenuItem value="Mayo">Mayo</MenuItem>
+                        <MenuItem value="Junio">Junio</MenuItem>
+                        <MenuItem value="Julio">Julio</MenuItem>
+                        <MenuItem value="Agosto">Agosto</MenuItem>
+                        <MenuItem value="Sept">Sept</MenuItem>
+                        <MenuItem value="Octubre">Octubre</MenuItem>
+                        <MenuItem value="Noviembre">Noviembre</MenuItem>
+                        <MenuItem value="Diciembre">Diciembre</MenuItem>
+                    </Select>
+                </FormControl>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="secondary">
-                    Cancelar
-                </Button>
-                <Button onClick={handleSubmit} color="primary">
-                    Agregar
-                </Button>
+                <Button onClick={onClose}>Cancelar</Button>
+                <Button sx={{mr:8}} onClick={handleSubmit}>Agregar</Button>
             </DialogActions>
         </Dialog>
     );

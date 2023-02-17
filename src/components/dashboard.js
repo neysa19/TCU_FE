@@ -1,27 +1,26 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MyFormDialog from './casillaFelizDialog';
-
+import { AddTransactionDialog } from './casillaFelizDialog';
+import Box from '@mui/material/Box';
+import MonthBox from './monthBox';
+import { Typography } from '@mui/material';
 
 export default function MainDashboard() {
-    const navigate = useNavigate();
-    const [anno, setAnno] = useState('');
+    //const navigate = useNavigate();
     const [transactions, setTransactions] = useState([])
-    const handleChange = (event) => {
-        setAnno(event.target.anno);
-        console.log(anno)
-    };
-    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Sept", "Octubre", "Noviembre", "Diciembre"];
+
+
+    const transactionRef = useRef(transactions);
+
+    useEffect(() => {
+        transactionRef.current = transactions;
+    }, [transactions]);
 
     useEffect(() => {
         try {
@@ -34,7 +33,8 @@ export default function MainDashboard() {
                 })
                 .then((response) => {
                     if (response.data.message === "OK") {
-                        setTransactions(response.data.data.data.transactions);
+                        setTransactions(response.data.data.transactions);
+
                     }
                 });
         } catch (err) {
@@ -44,60 +44,113 @@ export default function MainDashboard() {
 
     const [open, setOpen] = useState(false);
 
-    const handleFormSubmit = (formValues) => {
-      console.log(formValues); // Do something with the form data
-      try {
-        axios
-            .post("http://localhost:3020/users/transactions", {
-                user: localStorage.getItem('usuarioId'),
-                description: formValues.descripcion,
-                tab:"casilla_feliz",
-                amount: formValues.monto,
-                category: formValues.category
-            })
-            .catch(function (error) {
-                console.log(error.response.data.data);
-            })
-            .then((response) => {
-                if (response.data.message === "OK") {
-                    console.log(response.data.data)
-                }
-            });
-    } catch (err) {
-        alert(err);
-    }
+    const handleFormSubmit = ({ amount, description, category, month }) => {
+        try {
+            axios
+                .post("http://localhost:3020/users/transactions", {
+                    user: localStorage.getItem('usuarioId'),
+                    description: description,
+                    tab: "casilla_feliz",
+                    amount: amount,
+                    category: category,
+                    month: month
+                })
+                .catch(function (error) {
+                    console.log(error.response.data.data);
+                })
+                .then((response) => {
+                    console.log(response);
+                    if (response.data.message === "Created") {
+                        console.log(response.data.data)
+                        window.location.reload();
+                    }
+                });
+        } catch (err) {
+            alert(err);
+        }
     };
-    const getSalariosByMonth = () => {
 
-    };
     return (
         <Container>
-            <Paper >
-                <Button variant="contained" color="success" sx={{ m: 3 }} onClick={() => setOpen(true)}>
-                    + Agregar Transaccion
-                </Button>
-                <MyFormDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
-                <FormControl sx={{ minWidth: 120 }}>
-                    <InputLabel id="demo-controlled-open-select-label">Año</InputLabel>
-                    <Select
-                        labelId="demo-controlled-open-select-label"
-                        id="demo-controlled-open-select"
-                        value={anno}
-                        onChange={handleChange}
-                    >
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                    </Select>
-                </FormControl>
-                <Grid container sx={{ mt: 3 }}>
-                    {monthNames.map((monthName) => (
-                        <Grid item xs={1} sx={{ border: 1 }} key={monthName}>
-                            {monthName}
-                        </Grid>
+            <Paper>
+                <Grid container>
+                    <Grid item>
+                        <Typography variant="h6" sx={{ display: "flex", m: 3 }}>
+                            Leyenda para casilla feliz:
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Box sx={{ width: 15, height: 18, bgcolor: "green", mt: 4, mr: 1 }}></Box>
+                    </Grid>
+                    <Grid item>
+                        <Typography sx={{ display: "flex", mt: 4, mr: 2 }}>
+                            Buen estado
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Box sx={{ width: 15, height: 18, bgcolor: "yellow", mt: 4, mr: 1 }}></Box>
+                    </Grid>
+                    <Grid item>
+                        <Typography sx={{ display: "flex", mt: 4, mr: 2 }}>
+                            Estado regular
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Box sx={{ width: 15, height: 18, bgcolor: "red", mt: 4, mr: 1 }}></Box>
+                    </Grid>
+                    <Grid item>
+                        <Typography sx={{ display: "flex", mt: 4 }}>
+                            Mal estado
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="contained" color="success" sx={{ ml: 15, mt: 2, mr: 2 }} onClick={() => setOpen(true)}>
+                            + Agregar Transaccion
+                        </Button>
+                    </Grid>
+                    <AddTransactionDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
 
-                    ))}
                 </Grid>
+                <Box sx={{m:1}}>
+                    <Grid container wrap="nowrap" sx={{ overflow: "auto" }} >
+                        <Grid item sx={{ minWidth: 300 }} id="1">
+                            <MonthBox transactions={transactions} month={"Enero"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }} >
+                            <MonthBox transactions={transactions} month={"Febrero"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Marzo"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Abril"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Mayo"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Junio"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Julio"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Agosto"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Setiembre"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Octubre"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Noviembre"} />
+                        </Grid>
+                        <Grid item sx={{ minWidth: 300 }}>
+                            <MonthBox transactions={transactions} month={"Diciembre"} />
+                        </Grid>
+                    </Grid>
+                </Box>
             </Paper>
         </Container>
 
