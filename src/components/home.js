@@ -15,18 +15,14 @@ import UserAvatar from './userAvatar';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import CreateIcon from '@mui/icons-material/Create';
-import QueueIcon from '@mui/icons-material/Queue';
-import ScheduleIcon from '@mui/icons-material/Schedule';
 import MainDashboard from './dashboard';
-import ColaPost from './ColaPost';
-import CrearPost from './crearPost';
-import Schedule from './schedule';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import HouseIcon from '@mui/icons-material/House';
 import SavingsIcon from '@mui/icons-material/Savings';
+import PlanDeuda from './planDeuda';
+
 const drawerWidth = 260;
 
 const AppBar = styled(MuiAppBar, {
@@ -78,9 +74,9 @@ const mdTheme = createTheme();
 function DashboardContent() {
     const [open, setOpen] = React.useState(false);
     const [mainDashboard, setMainDashboard] = React.useState(true);
-    const [colaPost, setColaPost] = React.useState(false);
-    const [crearPost, setCrearPost] = React.useState(false);
-    const [schedule, setSchedule] = React.useState(false);
+    const [planDeuda, setPlanDeuda] = React.useState(false);
+    const [patrimonio, setPatrimonio] = React.useState(false);
+    const [presupuesto, setPresupuesto] = React.useState(false);
 
 
     const toggleDrawer = () => {
@@ -90,24 +86,24 @@ function DashboardContent() {
     const handleClick = value => () => {
         if(value==="Dashboard"){
             setMainDashboard(!mainDashboard);
-            setColaPost(false);
-            setCrearPost(false);
-            setSchedule(false);
-        } else if(value==="ColaPost"){
+            setPlanDeuda(false);
+            setPatrimonio(false);
+            setPresupuesto(false);
+        } else if(value==="planDeuda"){
             setMainDashboard(false);
-            setColaPost(true);
-            setCrearPost(false);
-            setSchedule(false);
-        } else if (value==="CrearPost"){
+            setPlanDeuda(true);
+            setPatrimonio(false);
+            setPresupuesto(false);
+        } else if (value==="patrimonio"){
             setMainDashboard(false);
-            setColaPost(false);
-            setCrearPost(true);
-            setSchedule(false);
-        } else if (value==="Schedule"){
+            setPlanDeuda(false);
+            setPatrimonio(true);
+            setPresupuesto(false);
+        } else if (value==="presupuesto"){
             setMainDashboard(false);
-            setColaPost(false);
-            setCrearPost(false);
-            setSchedule(true);
+            setPlanDeuda(false);
+            setPatrimonio(false);
+            setPresupuesto(true);
         }
     };
 
@@ -170,25 +166,25 @@ function DashboardContent() {
                                 </ListItemIcon>
                                 <ListItemText primary="Casilla Feliz" />
                             </ListItemButton>
-                            <ListItemButton onClick={handleClick('CrearPost')}>
+                            <ListItemButton onClick={handleClick('planDeuda')}>
                                 <ListItemIcon>
                                     <AccountBalanceIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Plan de deuda" />
                             </ListItemButton>
-                            <ListItemButton onClick={handleClick('ColaPost')}>
+                            <ListItemButton onClick={handleClick('patrimonio')}>
                                 <ListItemIcon>
                                     <HouseIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Patrimonio" />
                             </ListItemButton>
-                            <ListItemButton onClick={handleClick('Schedule')}>
+                            <ListItemButton onClick={handleClick('presupuesto')}>
                                 <ListItemIcon>
                                     <SavingsIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Presupuesto" />
                             </ListItemButton>
-                            <ListItemButton onClick={handleClick('Schedule')}>
+                            <ListItemButton onClick={handleClick('razones')}>
                                 <ListItemIcon>
                                     <CreateIcon />
                                 </ListItemIcon>
@@ -211,9 +207,9 @@ function DashboardContent() {
                 >
                     <Toolbar />
                     {mainDashboard ? (<MainDashboard />) : null}
-                    {colaPost ? (<ColaPost />) : null}
-                    {crearPost ? (<CrearPost />) : null}
-                    {schedule ? (<Schedule />) : null}
+                    {planDeuda ? (<PlanDeuda />) : null}
+                    {patrimonio ? (<patrimonio />) : null}
+                    {presupuesto ? (<presupuesto />) : null}
                 </Box>
             </Box>
         </ThemeProvider>
