@@ -38,6 +38,16 @@ export default function MonthBox({ transactions, month }) {
         const filteredData = transactions.filter((item) => item.month === month && item.category === "Ahorro");
         return filteredData;
     }
+    const getTotalAhorrosByMonth = () => {
+
+        let total = 0;
+        let ahorros = getAhorrosByMonth();
+        for (let i = 0; i < ahorros.length; i++) {
+            total += ahorros[i].amount;
+        }
+        return total;
+
+    }
     const getDeudasByMonth = () => {
 
         const filteredData = transactions.filter((item) => item.month === month && item.category === "Deudas");
@@ -72,7 +82,8 @@ export default function MonthBox({ transactions, month }) {
         let ingresos = getTotalIngresosByMonth()
         let gastos = getTotalGastosRecurrentesByMonth();
         let deudas = getTotalDeudasByMonth();
-        total = ingresos - gastos - deudas;
+        let ahorros = getTotalAhorrosByMonth();
+        total = ingresos - gastos - deudas - ahorros;
         return total;
 
     }
@@ -93,9 +104,9 @@ export default function MonthBox({ transactions, month }) {
     return (
         <Container>
             <Box>
-                <Box sx={{ border: 1 }} style={{ textAlign: 'center' }}>
+                <Box sx={{ border: 1, borderRadius: '16px' }} style={{ textAlign: 'center' }}>
                     <Typography variant="h5" >{month}</Typography>
-                    <Box sx={{ border: 1 }} >
+                    <Box sx={{ borderTop: 1 }} >
                         <Box sx={{ bgcolor: "lightgray" }} >
                             <Typography variant="h6" >
                                 Ingresos Netos
@@ -114,14 +125,14 @@ export default function MonthBox({ transactions, month }) {
                                     {ingreso.description}: {ingreso.amount}
                                 </Typography>)}
 
-                            <Typography sx={{ m: 1 }}>
+                            <Typography sx={{ m: 1, fontWeight: 'bold' }}>
                                 Total ingresos:
                                 {getTotalIngresosByMonth()}
                             </Typography>
                         </Box>
                     </Box>
 
-                    <Box sx={{ border: 1 }}>
+                    <Box sx={{ borderTop: 1 }}>
                         <Box sx={{ bgcolor: "lightgray" }}>
                             <Typography variant="h6" >
                                 Casilla del ahorro
@@ -131,9 +142,13 @@ export default function MonthBox({ transactions, month }) {
                             <Typography sx={{ m: 1 }}>
                                 {ahorro.description}: {ahorro.amount}
                             </Typography>)}
+                            <Typography sx={{ m: 1, fontWeight: 'bold' }}>
+                            Total de ahorros:
+                            {getTotalAhorrosByMonth()}
+                        </Typography>
                     </Box>
 
-                    <Box sx={{ border: 1 }}>
+                    <Box sx={{ borderTop: 1 }}>
                         <Box sx={{ bgcolor: "lightgray" }}>
 
                             <Typography variant="h6" >
@@ -144,36 +159,36 @@ export default function MonthBox({ transactions, month }) {
                             <Typography sx={{ m: 1 }}>
                                 {deuda.description}: {deuda.amount}
                             </Typography>)}
-                        <Typography sx={{ m: 1 }}>
+                        <Typography sx={{ m: 1, fontWeight: 'bold' }}>
                             Total de deudas:
                             {getTotalDeudasByMonth()}
                         </Typography>
                     </Box>
 
-                    <Box sx={{ border: 1 }}>
+                    <Box sx={{ borderTop: 1 }}>
                         <Box sx={{ bgcolor: "lightgray" }}>
 
-                            <Typography variant="h6" >
+                            <Typography variant="h6"  >
                                 Gastos Recurrentes
                             </Typography>
                         </Box>
                         {getGastosRecurrentesByMonth().map((gasto) =>
-                            <Typography sx={{ m: 1 }}>
+                            <Typography sx={{ m: 1}}>
                                 {gasto.description}: {gasto.amount}
                             </Typography>)}
-                        <Typography sx={{ m: 1 }}>
+                        <Typography sx={{ m: 1, fontWeight: 'bold' }}>
                             Total de Gastos:
                             {getTotalGastosRecurrentesByMonth()}
                         </Typography>
                     </Box>
-                    <Box sx={{ border: 1, bgcolor: getCasillaFelizColor() }}>
-                        <Box sx={{ bgcolor: getCasillaFelizColor() }}>
+                    <Box sx={{ border: 1, bgcolor: getCasillaFelizColor(),  borderRadius: '16px' }}>
+                        <Box sx={{ bgcolor: getCasillaFelizColor(),  borderRadius: '16px' }}>
                             <Typography variant="h6" >
                                 Casilla Feliz
                             </Typography>
                         </Box>
 
-                        <Typography variant="h5" sx={{ m: 1 }}>
+                        <Typography variant="h5" sx={{ m: 1, fontWeight: 'bold' }}>
                             {getCasillaFeliz()}
                         </Typography>
                     </Box>
