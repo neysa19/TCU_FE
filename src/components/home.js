@@ -22,6 +22,7 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import HouseIcon from '@mui/icons-material/House';
 import SavingsIcon from '@mui/icons-material/Savings';
 import PlanDeuda from './planDeuda';
+import Razones from './razones';
 
 const drawerWidth = 260;
 
@@ -77,6 +78,7 @@ function DashboardContent() {
     const [planDeuda, setPlanDeuda] = React.useState(false);
     const [patrimonio, setPatrimonio] = React.useState(false);
     const [presupuesto, setPresupuesto] = React.useState(false);
+    const [razones, setRazones] = React.useState(false);
 
 
     const toggleDrawer = () => {
@@ -89,21 +91,31 @@ function DashboardContent() {
             setPlanDeuda(false);
             setPatrimonio(false);
             setPresupuesto(false);
+            setRazones(false);
         } else if(value==="planDeuda"){
             setMainDashboard(false);
             setPlanDeuda(true);
             setPatrimonio(false);
             setPresupuesto(false);
+            setRazones(false);
         } else if (value==="patrimonio"){
             setMainDashboard(false);
             setPlanDeuda(false);
             setPatrimonio(true);
             setPresupuesto(false);
+            setRazones(false);
         } else if (value==="presupuesto"){
             setMainDashboard(false);
             setPlanDeuda(false);
             setPatrimonio(false);
+            setRazones(false);
             setPresupuesto(true);
+        } else if (value==="razones"){
+            setMainDashboard(false);
+            setPlanDeuda(false);
+            setPatrimonio(false);
+            setPresupuesto(false);
+            setRazones(true);
         }
     };
 
@@ -210,6 +222,7 @@ function DashboardContent() {
                     {planDeuda ? (<PlanDeuda />) : null}
                     {patrimonio ? (<patrimonio />) : null}
                     {presupuesto ? (<presupuesto />) : null}
+                    {razones ? (<Razones />) : null}
                 </Box>
             </Box>
         </ThemeProvider>
