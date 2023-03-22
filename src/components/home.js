@@ -23,6 +23,7 @@ import HouseIcon from '@mui/icons-material/House';
 import SavingsIcon from '@mui/icons-material/Savings';
 import PlanDeuda from './planDeuda';
 import Razones from './razones';
+import Presupuesto from './presupuesto';
 
 const drawerWidth = 260;
 
@@ -221,7 +222,7 @@ function DashboardContent() {
                     {mainDashboard ? (<MainDashboard />) : null}
                     {planDeuda ? (<PlanDeuda />) : null}
                     {patrimonio ? (<patrimonio />) : null}
-                    {presupuesto ? (<presupuesto />) : null}
+                    {presupuesto ? (<Presupuesto />) : null}
                     {razones ? (<Razones />) : null}
                 </Box>
             </Box>

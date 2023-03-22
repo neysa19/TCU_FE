@@ -6,14 +6,14 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 //import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { AddTransactionDialog } from './casillaFelizDialog';
+import { AddTransactionDialog } from './presupuestoDialog';
 import Box from '@mui/material/Box';
-import MonthBox from './monthBox';
+import MonthBoxPresupuesto from './monthBoxPresupuesto';
 import { Typography } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function MainDashboard() {
+export default function Presupuesto() {
     //const navigate = useNavigate();
     const [transactions, setTransactions] = useState([])
 
@@ -52,7 +52,7 @@ export default function MainDashboard() {
                 .post("http://localhost:3020/users/transactions", {
                     user: localStorage.getItem('usuarioId'),
                     description: description,
-                    tab: "casilla_feliz",
+                    tab: "presupuesto",
                     amount: amount,
                     category: category,
                     month: month
@@ -74,11 +74,26 @@ export default function MainDashboard() {
             alert(err);
         }
     };
-    const getCasillaFelizTransactions = () => {
+    const getPresupuestoTransactions = () => {
 
-        const filteredData = transactions.filter((item) => item.tab === "casilla_feliz");
+        const filteredData = transactions.filter((item) => item.tab === "presupuesto");
+
         return filteredData;
     }
+    const getPonderadoSalario = () => {
+        const transactions = getPresupuestoTransactions();
+        const filteredData = transactions.filter((item) => item.description === "Salario");
+        let sum = 0;
+        let ponderado = 0;
+        for (let i = 0; i < filteredData.length; i++) {
+            sum += filteredData[i].amount;
+        }
+
+        ponderado = sum / filteredData.length;
+
+        return ponderado;
+    };
+
     return (
         <Container>
             <Paper>
@@ -94,81 +109,61 @@ export default function MainDashboard() {
                     pauseOnHover
                     theme="light"
                 />
-                <Grid container>
-                    <Grid item>
-                        <Typography variant="h6" sx={{ display: "flex", m: 3 }}>
-                            Leyenda para casilla feliz:
+                <Grid container sx={{ mb: 5 }}>
+                    <Grid item xs="5" >
+                        <Box sx={{ border: 1, ml:4, mt:2 }} >
+                        <Typography variant="h5" sx={{ ml: 11, mt: 2, mb:2 }}>
+                            Salario promedio: {getPonderadoSalario()}
                         </Typography>
+                        </Box>
+
                     </Grid>
                     <Grid item>
-                        <Box sx={{ width: 15, height: 18, bgcolor: "green", mt: 4, mr: 1 }}></Box>
-                    </Grid>
-                    <Grid item>
-                        <Typography sx={{ display: "flex", mt: 4, mr: 2 }}>
-                            Buen estado
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Box sx={{ width: 15, height: 18, bgcolor: "yellow", mt: 4, mr: 1 }}></Box>
-                    </Grid>
-                    <Grid item>
-                        <Typography sx={{ display: "flex", mt: 4, mr: 2 }}>
-                            Estado regular
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Box sx={{ width: 15, height: 18, bgcolor: "red", mt: 4, mr: 1 }}></Box>
-                    </Grid>
-                    <Grid item>
-                        <Typography sx={{ display: "flex", mt: 4 }}>
-                            Mal estado
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="contained" color="success" sx={{ ml: 15, mt: 2, mr: 2 }} onClick={() => setOpen(true)}>
+                        <Button variant="contained" color="success" sx={{ ml: 15, mt: 3, mr: 2 }} onClick={() => setOpen(true)}>
                             + Agregar Transaccion
                         </Button>
                     </Grid>
+
                     <AddTransactionDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
 
-                </Grid> 
+                </Grid>
                 <Box sx={{ m: 1 }}>
                     <Grid container wrap="nowrap" sx={{ overflow: "auto" }} >
                         <Grid item sx={{ minWidth: 300 }} id="1">
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Enero"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Enero"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }} >
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Febrero"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Febrero"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Marzo"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Marzo"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Abril"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Abril"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Mayo"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Mayo"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Junio"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Junio"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Julio"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Julio"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Agosto"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Agosto"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Setiembre"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Setiembre"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Octubre"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Octubre"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Noviembre"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Noviembre"} />
                         </Grid>
                         <Grid item sx={{ minWidth: 300 }}>
-                            <MonthBox transactions={getCasillaFelizTransactions()} month={"Diciembre"} />
+                            <MonthBoxPresupuesto transactions={getPresupuestoTransactions()} month={"Diciembre"} />
                         </Grid>
                     </Grid>
                 </Box>

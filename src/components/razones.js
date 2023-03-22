@@ -22,7 +22,7 @@ import {
   
 export default function Razones() {
 
-    const [deudas, setDeudas] = useState([]);
+    const [razones, setRazones] = useState([]);
     const [open, setOpen] = useState(false);
 
     const handleFormSubmit = ({ nombre, calculo, observacion, descripcion }) => {
@@ -63,7 +63,7 @@ export default function Razones() {
                 })
                 .then((response) => {
                     if (response.data.message === "OK") {
-                        setDeudas(response.data.data.Razoness);
+                        setRazones(response.data.data.Razoness);
                     }
                 });
         } catch (err) {
@@ -145,7 +145,7 @@ export default function Razones() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {deudas.map((user) => (
+                                        {razones.map((user) => (
                                             <TableRow key={user.id}>
                                                 <TableCell component="th" scope="row">
                                                     {user.emisor}
