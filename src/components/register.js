@@ -49,6 +49,7 @@ export default function SignUp() {
                         name: data.get('firstName'),
                         first_last_name: data.get('lastName'),
                         password: data.get('password'),
+                        rol: "normal_user"
                     })
                     .catch(function (error) {
                         alert(error.response.message);
