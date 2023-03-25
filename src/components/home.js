@@ -24,6 +24,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import PlanDeuda from './planDeuda';
 import Razones from './razones';
 import Presupuesto from './presupuesto';
+import Patrimonio from './patrimonio';
 
 const drawerWidth = 260;
 
@@ -221,7 +222,7 @@ function DashboardContent() {
                     <Toolbar />
                     {mainDashboard ? (<MainDashboard />) : null}
                     {planDeuda ? (<PlanDeuda />) : null}
-                    {patrimonio ? (<patrimonio />) : null}
+                    {patrimonio ? (<Patrimonio />) : null}
                     {presupuesto ? (<Presupuesto />) : null}
                     {razones ? (<Razones />) : null}
                 </Box>
