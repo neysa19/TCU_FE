@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -25,7 +25,7 @@ import PlanDeuda from './planDeuda';
 import Razones from './razones';
 import Presupuesto from './presupuesto';
 import Patrimonio from './patrimonio';
-
+import axios from 'axios';
 const drawerWidth = 260;
 
 const AppBar = styled(MuiAppBar, {
@@ -81,7 +81,24 @@ function DashboardContent() {
     const [patrimonio, setPatrimonio] = React.useState(false);
     const [presupuesto, setPresupuesto] = React.useState(false);
     const [razones, setRazones] = React.useState(false);
-
+    const [tipoCambio, setTipoCambio] = React.useState({});
+    
+    useEffect(() => {
+        try {
+            axios
+                .get(`https://tipodecambio.paginasweb.cr/api`, {
+                })
+                .catch(function (error) {
+                    console.log(error.response.data.data);
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    setTipoCambio(response.data); //
+                });
+        } catch (err) {
+            alert(err);
+        }
+    }, []);
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -152,6 +169,7 @@ function DashboardContent() {
                         >
                             TCU-408 Educacion Financiera
                         </Typography>
+                        <Typography>$ Tipo de cambio: Venta ₡{tipoCambio.venta} - Compra ₡{tipoCambio.compra}</Typography>
                         <IconButton color="inherit">
                             <UserAvatar />
                         </IconButton>
