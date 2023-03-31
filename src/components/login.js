@@ -10,9 +10,12 @@ import Grid from '@mui/material/Grid';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ResetPasswordDialog } from './resetPasswordDialog';
 
 function Copyright(props) {
   return (
@@ -29,8 +32,8 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-const setDataLS = (data) =>{
-  localStorage.setItem('token',data.data.token);
+const setDataLS = (data) => {
+  localStorage.setItem('token', data.data.token);
   const decoded = jwt_decode(data.data.token);
   const usuarioId = decoded.user._id;
   localStorage.setItem('usuarioId', usuarioId);
@@ -39,17 +42,38 @@ const setDataLS = (data) =>{
 
 export default function SignInSide() {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
+  const handleFormSubmit = ({ correo }) => {
+    try {
+      axios
+        .post("https://calculadora-be.herokuapp.com/users/resetPassword", {
+          email: correo
+        })
+        .catch(function (error) {
+          console.log(error.response.data.data);
+        })
+        .then((response) => {
+          console.log(response.data);
+          console.log(response.data.message);
+          if (response.data.message === "OK") {
+            toast.success(`Correo enviado a: ${correo}`)
+          }
+        });
+    } catch (err) {
+      alert(err);
+    }
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    try{
-        axios
-        .post("http://localhost:3020/users/login", {
-            email: data.get('email'),
-            password: data.get('password'),
+    try {
+      axios
+        .post("https://calculadora-be.herokuapp.com/users/login", {
+          email: data.get('email'),
+          password: data.get('password'),
         })
-        .catch(function (error){
+        .catch(function (error) {
           alert(error.response.data.data);
         })
         .then((response) => {
@@ -58,14 +82,27 @@ export default function SignInSide() {
             navigate('/home');
           }
         });
-      }catch(err){
-        alert(err);
-      }
+    } catch (err) {
+      alert(err);
+    }
   };
 
   return (
+
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <CssBaseline />
         <Grid
           item
@@ -92,7 +129,7 @@ export default function SignInSide() {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                $
+              $
             </Avatar>
             <Typography component="h1" variant="h5">
               Bienvenido a TCU-408 Educacion Financiera
@@ -127,7 +164,13 @@ export default function SignInSide() {
                 Ingresa
               </Button>
               <Grid container>
-                <Grid item>
+              <Grid item>
+                  <Button variant="contained" color="warning" sx={{ width: 300, mb: 2 }} onClick={() => setOpen(true)}>
+                    Olvidaste tu contraseña?
+                  </Button>
+                  <ResetPasswordDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
+                </Grid>
+                <Grid item xs="12">
                   <Link href="/register" variant="body2">
                     {"No tienes una cuenta? Registrate."}
                   </Link>

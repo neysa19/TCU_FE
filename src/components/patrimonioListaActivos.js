@@ -28,7 +28,7 @@ export default function ListaActivos(transactions) {
     const handleFormSubmit = ({ amount, description, category }) => {
         try {
             axios
-                .post("http://localhost:3020/users/transactions", {
+                .post("https://calculadora-be.herokuapp.com/users/transactions", {
                     user: localStorage.getItem('usuarioId'),
                     description: description,
                     tab: "patrimonio",
