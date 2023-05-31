@@ -47,118 +47,104 @@ export default function Hacienda() {
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
     };
-    const columns = [
-        { field: 'estado', headerName: 'Estado', width: 90 },
-        {
-            field: 'tipo',
-            headerName: 'Tipo',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'codigo',
-            headerName: 'Codigo',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'descripcion',
-            headerName: 'Descripcion',
-            width: 110,
-            editable: true,
-        },
-    ];
 
     return (
         <Container>
             <Paper>
-                <form onSubmit={handleSubmit} sx={{ m: 2 }}>
-                    <TextField
-                        label="Input"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                    />
-                    <Button type="submit" variant="contained" color="primary">
-                        Submit
-                    </Button>
+
+                <form onSubmit={handleSubmit} >
+                    <Grid container justifyContent="center">
+                        <Grid item xs={1}></Grid>
+                        <Grid item xs={10}>
+                            <TextField
+                                label="Cedula física o jurídica"
+                                value={inputValue}
+                                onChange={handleInputChange}
+                                variant="outlined"
+                                fullWidth
+                                margin="normal"
+                            />
+                            <Button type="submit" variant="contained" color="primary">
+                                Buscar
+                            </Button>
+                            </Grid>
+                        </Grid>
                 </form>
+
                 <Grid container sx={{ m: 5 }}>
 
                     <Grid item xs={3}>
                     </Grid>
-                    <Grid item xs={6} sx={{mb:1}}>
+                    <Grid item xs={6} sx={{ mb: 5 }}>
                         <Box style={{ textAlign: 'center' }}>
-                        <Typography variant="h5" >
-                            Nombre: {dataHacienda.nombre}
-                        </Typography>
+                            <Typography variant="h5" >
+                                Nombre: {dataHacienda.nombre}
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={3}>
                     </Grid>
 
                     <Grid item xs={6}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Identificacion: {dataHacienda.tipoIdentificacion}
-                        </Typography>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                            Identificación: { dataHacienda.tipoIdentificacion === '01' ? 'Física' : 'Jurídica'}
+                            </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6} sx={{mb:3}}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Régimen: {dataHacienda.regimen?.descripcion}
-                        </Typography>
+                    <Grid item xs={6} sx={{ mb: 8 }}>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                                Régimen: {dataHacienda.regimen?.descripcion}
+                            </Typography>
                         </Box>
                     </Grid>
 
-                    <Grid item xs={12} sx={{mb:1}}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography variant="h5">
-                            Situacion Tributaria
-                        </Typography>
+                    <Grid item xs={12} sx={{ mb: 5 }}>
+                        <Box style={{ textAlign: 'center' }} >
+                            <Typography variant="h5">
+                                Situacion Tributaria
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={2}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Moroso: {dataHacienda.situacion?.moroso}
-                        </Typography>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                                Moroso: {dataHacienda.situacion?.moroso}
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={2}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Omiso: {dataHacienda.situacion?.omiso}
-                        </Typography>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                                Omiso: {dataHacienda.situacion?.omiso}
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={3}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Estado: {dataHacienda.situacion?.estado}
-                        </Typography>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                                Estado: {dataHacienda.situacion?.estado}
+                            </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={4} sx={{mb:3}}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography>
-                            Administracion Tributaria: {dataHacienda.situacion?.administracionTributaria}
-                        </Typography>
+                    <Grid item xs={4} sx={{ mb: 10 }}>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography>
+                                Administracion Tributaria: {dataHacienda.situacion?.administracionTributaria}
+                            </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={12}>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography variant="h5">
-                            Actividades
-                        </Typography>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography variant="h5">
+                                Actividades
+                            </Typography>
                         </Box>
                     </Grid>
                 </Grid>
                 {showDataGrid ? <TableContainer component={Paper}>
-                    <Table aria-label="simple table">
+                    <Table aria-label="simple table" >
                         <TableHead>
                             <TableRow>
                                 <TableCell align="center">Estado</TableCell>

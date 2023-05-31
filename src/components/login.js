@@ -37,6 +37,7 @@ const setDataLS = (data) => {
   const decoded = jwt_decode(data.data.token);
   const usuarioId = decoded.user._id;
   localStorage.setItem('usuarioId', usuarioId);
+  localStorage.setItem('rol', decoded.user.rol)
 
 }
 
@@ -47,7 +48,7 @@ export default function SignInSide() {
   const handleFormSubmit = ({ correo }) => {
     try {
       axios
-        .post("https://calculadora-be.herokuapp.com/users/resetPassword", {
+        .post("http://localhost:3020/users/resetPassword", {
           email: correo
         })
         .catch(function (error) {
@@ -69,7 +70,7 @@ export default function SignInSide() {
     const data = new FormData(event.currentTarget);
     try {
       axios
-        .post("https://calculadora-be.herokuapp.com/users/login", {
+        .post("http://localhost:3020/users/login", {
           email: data.get('email'),
           password: data.get('password'),
         })

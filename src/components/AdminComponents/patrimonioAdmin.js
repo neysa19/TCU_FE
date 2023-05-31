@@ -7,13 +7,21 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import ListaActivos from './patrimonioListaActivos';
-import MonthBox from './monthBoxPatrimonio';
-export default function Patrimonio() {
+import ListaActivos from '../patrimonioListaActivos';
+import MonthBox from '../monthBoxPatrimonio';
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@mui/material';
+
+export default function Patrimonio(props) {
     //const navigate = useNavigate();
     const [transactions, setTransactions] = useState([])
     const [value, setValue] = React.useState(1);
-
+    const { open, onClose } = props;
 
     const transactionRef = useRef(transactions);
 
@@ -23,7 +31,7 @@ export default function Patrimonio() {
 
     useEffect(() => {
         try {
-            const usuarioId = localStorage.getItem('usuarioId')
+            const usuarioId = localStorage.getItem('selectedUser')
             axios
                 .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
                 })
@@ -53,6 +61,9 @@ export default function Patrimonio() {
     };
 
     return (
+        <Dialog open={open} onClose={onClose} maxWidth={1200}>
+        <DialogTitle>Casilla Feliz</DialogTitle>
+        <DialogContent sx={{m:1, width:1200}}>
         <Container>
             <Paper>
                 <Grid container sx={{ mb: 5 }}>
@@ -87,6 +98,11 @@ export default function Patrimonio() {
                     </Box>}
             </Paper>
         </Container>
+        </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Salir</Button>
+            </DialogActions>
+        </Dialog >
 
     );
 }

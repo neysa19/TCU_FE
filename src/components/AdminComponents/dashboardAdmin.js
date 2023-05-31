@@ -6,16 +6,21 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 //import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { AddTransactionDialog } from './casillaFelizDialog';
 import Box from '@mui/material/Box';
-import MonthBox from './monthBox';
+import MonthBox from '../monthBox';
 import { Typography } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export default function MainDashboard() {
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@mui/material';
+export default function MainDashboard(props) {
     //const navigate = useNavigate();
     const [transactions, setTransactions] = useState([])
+    const { open, onClose } = props;
 
 
     const transactionRef = useRef(transactions);
@@ -26,7 +31,7 @@ export default function MainDashboard() {
 
     useEffect(() => {
         try {
-            const usuarioId = localStorage.getItem('usuarioId')
+            const usuarioId = localStorage.getItem('selectedUser');
             axios
                 .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
                 })
@@ -35,8 +40,9 @@ export default function MainDashboard() {
                 })
                 .then((response) => {
                     if (response.data.message === "OK") {
+                        console.log(response.data.data);
                         setTransactions(response.data.data.transactions);
-
+                        console.log(transactions)
                     }
                 });
         } catch (err) {
@@ -44,42 +50,15 @@ export default function MainDashboard() {
         }
     }, []);
 
-    const [open, setOpen] = useState(false);
-
-    const handleFormSubmit = ({ amount, description, category, month }) => {
-        try {
-            axios
-                .post("http://localhost:3020/users/transactions", {
-                    user: localStorage.getItem('usuarioId'),
-                    description: description,
-                    tab: "casilla_feliz",
-                    amount: amount,
-                    category: category,
-                    month: month
-                })
-                .catch(function (error) {
-                    console.log(error.response.data.data);
-                })
-                .then((response) => {
-                    console.log(response);
-                    if (response.data.message === "Created") {
-                        console.log(response.data.data)
-                        toast.success(`Transaccion creada`)
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }
-                });
-        } catch (err) {
-            alert(err);
-        }
-    };
     const getCasillaFelizTransactions = () => {
 
         const filteredData = transactions.filter((item) => item.tab === "casilla_feliz");
         return filteredData;
     }
     return (
+        <Dialog open={open} onClose={onClose} maxWidth={1200}>
+        <DialogTitle>Casilla Feliz</DialogTitle>
+        <DialogContent sx={{m:1, width:1200}}>
         <Container>
             <Paper>
                 <ToastContainer
@@ -124,13 +103,6 @@ export default function MainDashboard() {
                             Mal estado
                         </Typography>
                     </Grid>
-                    <Grid item>
-                        <Button variant="contained" color="success" sx={{ ml: 15, mt: 2, mr: 2 }} onClick={() => setOpen(true)}>
-                            + Agregar Transaccion
-                        </Button>
-                    </Grid>
-                    <AddTransactionDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
-
                 </Grid> 
                 <Box sx={{ m: 1 }}>
                     <Grid container wrap="nowrap" sx={{ overflow: "auto" }} >
@@ -174,6 +146,10 @@ export default function MainDashboard() {
                 </Box>
             </Paper>
         </Container>
-
+        </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Salir</Button>
+            </DialogActions>
+        </Dialog>
     );
 }
