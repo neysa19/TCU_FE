@@ -37,6 +37,7 @@ const setDataLS = (data) => {
   const decoded = jwt_decode(data.data.token);
   const usuarioId = decoded.user._id;
   localStorage.setItem('usuarioId', usuarioId);
+  localStorage.setItem('rol', decoded.user.rol)
 
 }
 

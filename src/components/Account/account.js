@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,7 +18,7 @@ import ListItemText from '@mui/material/ListItemText';
 import UserIcon from '@mui/icons-material/Person';
 import SecurityIcon from '@mui/icons-material/Security';
 import UserProfile from './userProfile';
-import UserSecurity from './userSecurity';
+import UserAdminView from './userAdminView';
 const drawerWidth = 260;
 
 const AppBar = styled(MuiAppBar, {
@@ -71,8 +71,13 @@ export default function AccountContent() {
     const [open, setOpen] = React.useState(false);
     const [userProfile, setUserProfile] = React.useState(true);
     const [userSecurity, setUserSecurity] = React.useState(false);
+    const [userRole, setUserRole] = React.useState(false);
 
+    useEffect(() => {
+        const rol = localStorage.getItem('rol');
+        setUserRole(rol)
 
+    }, []);
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -146,12 +151,13 @@ export default function AccountContent() {
                                 </ListItemIcon>
                                 <ListItemText primary="Perfil General" />
                             </ListItemButton>
+                            { userRole === 'admin' ?
                             <ListItemButton onClick={handleClick('Security')}>
                                 <ListItemIcon>
                                     <SecurityIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Seguridad" />
-                            </ListItemButton>
+                            </ListItemButton> : null}
                         </React.Fragment>
                     </List>
                 </Drawer>
@@ -169,7 +175,7 @@ export default function AccountContent() {
                 >
                     <Toolbar />
                     {userProfile ? (<UserProfile />) : null}
-                    {userSecurity ? (<UserSecurity />) : null}
+                    {userSecurity ? (<UserAdminView />) : null}
                 </Box>
             </Box>
         </ThemeProvider>

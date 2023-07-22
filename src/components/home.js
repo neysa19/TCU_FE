@@ -21,10 +21,12 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import HouseIcon from '@mui/icons-material/House';
 import SavingsIcon from '@mui/icons-material/Savings';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import PlanDeuda from './planDeuda';
 import Razones from './razones';
 import Presupuesto from './presupuesto';
 import Patrimonio from './patrimonio';
+import Hacienda from './hacienda';
 import axios from 'axios';
 const drawerWidth = 260;
 
@@ -81,6 +83,8 @@ function DashboardContent() {
     const [patrimonio, setPatrimonio] = React.useState(false);
     const [presupuesto, setPresupuesto] = React.useState(false);
     const [razones, setRazones] = React.useState(false);
+    const [hacienda, setHacienda] = React.useState(false);
+
     const [tipoCambio, setTipoCambio] = React.useState({});
     
     useEffect(() => {
@@ -111,31 +115,44 @@ function DashboardContent() {
             setPatrimonio(false);
             setPresupuesto(false);
             setRazones(false);
+            setHacienda(false);
         } else if(value==="planDeuda"){
             setMainDashboard(false);
             setPlanDeuda(true);
             setPatrimonio(false);
             setPresupuesto(false);
             setRazones(false);
+            setHacienda(false);
         } else if (value==="patrimonio"){
             setMainDashboard(false);
             setPlanDeuda(false);
             setPatrimonio(true);
             setPresupuesto(false);
             setRazones(false);
+            setHacienda(false);
         } else if (value==="presupuesto"){
             setMainDashboard(false);
             setPlanDeuda(false);
             setPatrimonio(false);
             setRazones(false);
             setPresupuesto(true);
+            setHacienda(false);
         } else if (value==="razones"){
             setMainDashboard(false);
             setPlanDeuda(false);
             setPatrimonio(false);
             setPresupuesto(false);
             setRazones(true);
+            setHacienda(false);
+        } else if (value==="hacienda"){
+            setMainDashboard(false);
+            setPlanDeuda(false);
+            setPatrimonio(false);
+            setPresupuesto(false);
+            setRazones(false);
+            setHacienda(true);
         }
+        
     };
 
     return (
@@ -222,6 +239,12 @@ function DashboardContent() {
                                 </ListItemIcon>
                                 <ListItemText primary="Razones" />
                             </ListItemButton>
+                            <ListItemButton onClick={handleClick('hacienda')}>
+                                <ListItemIcon>
+                                    <QuestionMarkIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Consultas Hacienda" />
+                            </ListItemButton>
                         </React.Fragment>
                     </List>
                 </Drawer>
@@ -243,6 +266,7 @@ function DashboardContent() {
                     {patrimonio ? (<Patrimonio />) : null}
                     {presupuesto ? (<Presupuesto />) : null}
                     {razones ? (<Razones />) : null}
+                    {hacienda ? (<Hacienda />) : null}
                 </Box>
             </Box>
         </ThemeProvider>
