@@ -28,7 +28,7 @@ export default function MainDashboard() {
         try {
             const usuarioId = localStorage.getItem('usuarioId')
             axios
-                .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
+                .get(`https://calculadora-be.herokuapp.com/users/transactions/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);
@@ -49,7 +49,7 @@ export default function MainDashboard() {
     const handleFormSubmit = ({ amount, description, category, month }) => {
         try {
             axios
-                .post("http://localhost:3020/users/transactions", {
+                .post("https://calculadora-be.herokuapp.com/users/transactions", {
                     user: localStorage.getItem('usuarioId'),
                     description: description,
                     tab: "casilla_feliz",

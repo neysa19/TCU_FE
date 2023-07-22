@@ -48,7 +48,7 @@ export default function SignInSide() {
   const handleFormSubmit = ({ correo }) => {
     try {
       axios
-        .post("http://localhost:3020/users/resetPassword", {
+        .post("https://calculadora-be.herokuapp.com/users/resetPassword", {
           email: correo
         })
         .catch(function (error) {
@@ -70,7 +70,7 @@ export default function SignInSide() {
     const data = new FormData(event.currentTarget);
     try {
       axios
-        .post("http://localhost:3020/users/login", {
+        .post("https://calculadora-be.herokuapp.com/users/login", {
           email: data.get('email'),
           password: data.get('password'),
         })

@@ -40,7 +40,7 @@ export default function UserAdminView() {
     useEffect(() => {
         try {
             axios
-                .get("http://localhost:3020/users", {
+                .get("https://calculadora-be.herokuapp.com/users", {
                 })
                 .catch(function (error) {
                     alert(error.response.message);

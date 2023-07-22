@@ -81,7 +81,7 @@ export default function UserProfile() {
         event.preventDefault();
         try {
             axios
-                .put(`http://localhost:3020/users/${usuarioId}`, {
+                .put(`https://calculadora-be.herokuapp.com/users/${usuarioId}`, {
                     name: firstName,
                     last_name: lastName,
                     birthday: birthday,
@@ -121,7 +121,7 @@ export default function UserProfile() {
         event.preventDefault();
         try {
             axios
-                .put(`http://localhost:3020/users/${usuarioId}`, {
+                .put(`https://calculadora-be.herokuapp.com/users/${usuarioId}`, {
                     nombre: firstName,
                     apellido: lastName,
                     email: email
