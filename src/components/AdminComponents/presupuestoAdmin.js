@@ -6,16 +6,21 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 //import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { AddTransactionDialog } from './presupuestoDialog';
 import Box from '@mui/material/Box';
-import MonthBoxPresupuesto from './monthBoxPresupuesto';
+import MonthBoxPresupuesto from '../monthBoxPresupuesto';
 import { Typography } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-export default function Presupuesto() {
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@mui/material';
+export default function Presupuesto(props) {
     //const navigate = useNavigate();
     const [transactions, setTransactions] = useState([])
+    const { open, onClose } = props;
 
 
     const transactionRef = useRef(transactions);
@@ -26,7 +31,7 @@ export default function Presupuesto() {
 
     useEffect(() => {
         try {
-            const usuarioId = localStorage.getItem('usuarioId')
+            const usuarioId = localStorage.getItem('selectedUser')
             axios
                 .get(`https://calculadora-be.herokuapp.com/users/transactions/${usuarioId}`, {
                 })
@@ -44,36 +49,6 @@ export default function Presupuesto() {
         }
     }, []);
 
-    const [open, setOpen] = useState(false);
-
-    const handleFormSubmit = ({ amount, description, category, month }) => {
-        try {
-            axios
-                .post("https://calculadora-be.herokuapp.com/users/transactions", {
-                    user: localStorage.getItem('usuarioId'),
-                    description: description,
-                    tab: "presupuesto",
-                    amount: amount,
-                    category: category,
-                    month: month
-                })
-                .catch(function (error) {
-                    console.log(error.response.data.data);
-                })
-                .then((response) => {
-                    console.log(response);
-                    if (response.data.message === "Created") {
-                        console.log(response.data.data)
-                        toast.success(`Transaccion creada`)
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }
-                });
-        } catch (err) {
-            alert(err);
-        }
-    };
     const getPresupuestoTransactions = () => {
 
         const filteredData = transactions.filter((item) => item.tab === "presupuesto");
@@ -95,6 +70,9 @@ export default function Presupuesto() {
     };
 
     return (
+        <Dialog open={open} onClose={onClose} maxWidth={1200}>
+        <DialogTitle>Casilla Feliz</DialogTitle>
+        <DialogContent sx={{m:1, width:1200}}>
         <Container>
             <Paper>
                 <ToastContainer
@@ -118,13 +96,6 @@ export default function Presupuesto() {
                         </Box>
 
                     </Grid>
-                    <Grid item>
-                        <Button variant="contained" color="success" sx={{ ml: 15, mt: 3, mr: 2 }} onClick={() => setOpen(true)}>
-                            + Agregar Transaccion
-                        </Button>
-                    </Grid>
-
-                    <AddTransactionDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
 
                 </Grid>
                 <Box sx={{ m: 1 }}>
@@ -169,6 +140,10 @@ export default function Presupuesto() {
                 </Box>
             </Paper>
         </Container>
-
+        </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Salir</Button>
+            </DialogActions>
+        </Dialog>
     );
 }
