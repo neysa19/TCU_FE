@@ -9,8 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import { RazonesDialog } from './RazonesDialog.js';
-import Dictionary from './dictionary';
+import Dictionary from '../dictionary';
 import {
     Table,
     TableBody,
@@ -18,43 +17,22 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-  } from '@mui/material';
-  
-export default function Razones() {
+} from '@mui/material';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+} from '@mui/material';
+export default function Razones(props) {
 
     const [razones, setRazones] = useState([]);
-    const [open, setOpen] = useState(false);
+    const { open, onClose } = props;
 
-    const handleFormSubmit = ({ nombre, calculo, observacion, descripcion }) => {
-        try {
-            axios
-                .post("https://calculadora-be.herokuapp.com/users/razones", {
-                    user: localStorage.getItem('usuarioId'),
-                    descripcion: descripcion,
-                    nombre: nombre,
-                    calculo:calculo,
-                    observacion:observacion
-                })
-                .catch(function (error) {
-                    console.log(error.response.data.data);
-                })
-                .then((response) => {
-                    console.log(response);
-                    if (response.data.message === "Created") {
-                        console.log(response.data.data)
-                        toast.success(`Deuda creada`)
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 2000);
-                    }
-                });
-        } catch (err) {
-            alert(err);
-        }
-    };
+
     useEffect(() => {
         try {
-            const usuarioId = localStorage.getItem('usuarioId')
+            const usuarioId = localStorage.getItem('selectedUser')
             axios
                 .get(`https://calculadora-be.herokuapp.com/users/razones/${usuarioId}`, {
                 })
@@ -91,84 +69,86 @@ export default function Razones() {
         'Rangos del nivel de endeudamiento': ['Menos de un 35% = Saludable', 'Entre 35% y 60% = Vulnerable', 'Entre 60% y 80% = Grave', 'Mas de 90% = Critico']
     };
     return (
-        <Container sx={{ mt: 4, mb: 4 }}>
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />
+        <Dialog open={open} onClose={onClose} maxWidth={1200}>
+            <DialogTitle>Casilla Feliz</DialogTitle>
+            <DialogContent sx={{ m: 1, width: 1200 }}>
+                <Container sx={{ mt: 4, mb: 4 }}>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                        theme="light"
+                    />
 
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={8} lg={12}>
-                    <Paper
-                        sx={{
-                            p: 2,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '100%'
-                        }}
-                    >
-                        <Grid container >
-                            <Grid item xs={4}>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="h5" sx={{ mt: 1 }}>
-                                    Razones de bienestar financiero
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={1}>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <Button variant="contained" color="success" sx={{ width: 180, mb: 2 }} onClick={() => setOpen(true)}>
-                                    + Agregar Razon
-                                </Button>
-                                <RazonesDialog open={open} onClose={() => setOpen(false)} onSubmit={handleFormSubmit} />
-                            </Grid>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} md={8} lg={12}>
+                            <Paper
+                                sx={{
+                                    p: 2,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    width: '100%'
+                                }}
+                            >
+                                <Grid container >
+                                    <Grid item xs={4}>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography variant="h5" sx={{ mt: 1 }}>
+                                            Razones de bienestar financiero
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                    </Grid>
 
+                                </Grid>
+                                <Box sx={{ width: '100%', mb: 5 }}>
+                                    <TableContainer component={Paper}>
+                                        <Table aria-label="simple table">
+                                            <TableHead>
+                                                <TableRow>
+                                                    <TableCell>Nombre</TableCell>
+                                                    <TableCell align="center">Descripción</TableCell>
+                                                    <TableCell align="center">Calculo</TableCell>
+                                                    <TableCell align="center">Observacion</TableCell>
+                                                </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                                {razones.map((user) => (
+                                                    <TableRow key={user.id}>
+                                                        <TableCell component="th" scope="row">
+                                                            {user.emisor}
+                                                        </TableCell>
+                                                        <TableCell align="center">{user.emisor}</TableCell>
+                                                        <TableCell align="center">{user.emisor}</TableCell>
+                                                        <TableCell align="center">{user.emisor}</TableCell>
+                                                    </TableRow>
+                                                ))}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                </Box>
+                                <Typography variant="h6" style={{ textAlign: 'center' }} sx={{ mt: 3 }} >Criterios</Typography>
+                                <Dictionary data={criterios} />
+                                <Typography variant="h6" style={{ textAlign: 'center' }} sx={{ mt: 3 }} >Definiciones</Typography>
+                                <Dictionary data={definiciones} />
+                                <Typography variant="h6" style={{ textAlign: 'center' }} sx={{ mt: 3 }}>Otras razones de bienestar financiero</Typography>
+                                <Dictionary data={otros_razones} />
+                            </Paper>
                         </Grid>
-                        <Box sx={{width: '100%', mb:5 }}>
-                            <TableContainer component={Paper}>
-                                <Table aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Nombre</TableCell>
-                                            <TableCell align="center">Descripción</TableCell>
-                                            <TableCell align="center">Calculo</TableCell>
-                                            <TableCell align="center">Observacion</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {razones.map((user) => (
-                                            <TableRow key={user.id}>
-                                                <TableCell component="th" scope="row">
-                                                    {user.emisor}
-                                                </TableCell>
-                                                <TableCell align="center">{user.emisor}</TableCell>
-                                                <TableCell align="center">{user.emisor}</TableCell>
-                                                <TableCell align="center">{user.emisor}</TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </Box>
-                        <Typography variant="h6" style={{ textAlign: 'center' }} sx={{mt:3}} >Criterios</Typography>
-                        <Dictionary data={criterios} />
-                        <Typography variant="h6" style={{ textAlign: 'center' }} sx={{mt:3}} >Definiciones</Typography>
-                        <Dictionary data={definiciones} />
-                        <Typography variant="h6" style={{ textAlign: 'center' }} sx={{mt:3}}>Otras razones de bienestar financiero</Typography>
-                        <Dictionary data={otros_razones} />
-                    </Paper>
-                </Grid>
-            </Grid>
-        </Container>
+                    </Grid>
+                </Container>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>Salir</Button>
+            </DialogActions>
+        </Dialog>
 
     );
 }

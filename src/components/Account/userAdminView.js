@@ -23,7 +23,9 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MainDashboard from '../AdminComponents/dashboardAdmin';
 import Patrimonio from '../AdminComponents/patrimonioAdmin';
-
+import Presupuesto from '../AdminComponents/presupuestoAdmin';
+import PlanDeuda from '../AdminComponents/planDeudaAdmin';
+import Razones from '../AdminComponents/razonesAdmin';
 export default function UserAdminView() {
     const navigate = useNavigate();
     const [usersData, setUsersData] = useState([]);
@@ -75,7 +77,39 @@ export default function UserAdminView() {
         localStorage.setItem("selectedUser", '');
         setOpenPatrimonio(false);
     };
-
+    const handlePresupuestoClick = (id) => {
+        console.log("Selected user: ", id);
+        localStorage.setItem("selectedUser", id);
+        setRenderPresupuesto(true);
+        setOpenPresupuesto(true);
+    };
+    const handlePresupuestoClose = () => {
+        setRenderPresupuesto(false);
+        localStorage.setItem("selectedUser", '');
+        setOpenPresupuesto(false);
+    }
+    const handleDeudaClick = (id) => {
+        console.log("Selected user: ", id);
+        localStorage.setItem("selectedUser", id);
+        setRenderDeuda(true);
+        setOpenDeuda(true);
+    };
+    const handleDeudaClose = () => {
+        setRenderDeuda(false);
+        localStorage.setItem("selectedUser", '');
+        setOpenDeuda(false);
+    }
+    const handleRazonesClick = (id) => {
+        console.log("Selected user: ", id);
+        localStorage.setItem("selectedUser", id);
+        setRenderRazones(true);
+        setOpenRazones(true);
+    };
+    const handleRazonesClose = () => {
+        setRenderRazones(false);
+        localStorage.setItem("selectedUser", '');
+        setOpenRazones(false);
+    }
     return (
         <Box sx={{ width: '100%', mb: 5 }}>
             {renderCasilla ?
@@ -83,6 +117,15 @@ export default function UserAdminView() {
             }
             {renderPatrimonio ?
                 <Patrimonio open={openPatrimonio} onClose={() => handlePatrimonioClose()} /> : null
+            }
+            {renderPresupuesto ?
+                <Presupuesto open={openPresupuesto} onClose={() => handlePresupuestoClose()} /> : null
+            }
+            {renderDeuda ?
+                <PlanDeuda open={openDeuda} onClose={() => handleDeudaClose()} /> : null
+            }
+            {renderRazones ?
+                <Razones open={openRazones} onClose={() => handleRazonesClose()} /> : null
             }
             <TableContainer component={Paper}>
                 <Table aria-label="simple table">
@@ -114,17 +157,17 @@ export default function UserAdminView() {
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton aria-label="delete">
+                                    <IconButton aria-label="delete" onClick={() => handlePresupuestoClick(user._id)}>
                                         <VisibilityIcon />
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton aria-label="delete">
+                                    <IconButton aria-label="delete" onClick={() => handleDeudaClick(user._id)}>
                                         <VisibilityIcon />
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton aria-label="delete">
+                                    <IconButton aria-label="delete" onClick={() => handleRazonesClick(user._id)}>
                                         <VisibilityIcon />
                                     </IconButton>
                                 </TableCell>
