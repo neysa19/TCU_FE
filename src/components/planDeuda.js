@@ -94,7 +94,7 @@ export default function PlanDeuda() {
       width: 150,
     },
     {
-      field: 'ponderazo_plazo',
+      field: 'ponderado_plazo',
       headerName: 'Ponderado Plazo',
       width: 150,
     },
