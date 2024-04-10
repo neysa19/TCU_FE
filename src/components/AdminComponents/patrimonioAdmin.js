@@ -43,7 +43,7 @@ export default function Patrimonio(props) {
         try {
             const usuarioId = localStorage.getItem('selectedUser')
             axios
-                .get(`https://calculadora-be.herokuapp.com/users/transactions/${usuarioId}`, {
+                .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);

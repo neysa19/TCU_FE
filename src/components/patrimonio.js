@@ -36,7 +36,7 @@ export default function Patrimonio() {
         try {
             const usuarioId = localStorage.getItem('usuarioId')
             axios
-                .get(`https://calculadora-be.herokuapp.com/users/transactions/${usuarioId}`, {
+                .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);
@@ -67,7 +67,7 @@ export default function Patrimonio() {
                 if (inputValues.hasOwnProperty(inputName)) {
                     if (inputValues[inputName] !== "") {
                         axios
-                            .post("https://calculadora-be.herokuapp.com/users/transactions", {
+                            .post("http://localhost:3020/users/transactions", {
                                 user: localStorage.getItem('usuarioId'),
                                 description: inputName,
                                 tab: "patrimonio",

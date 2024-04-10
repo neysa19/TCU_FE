@@ -27,7 +27,7 @@ export default function PlanDeuda(props) {
     try {
       const usuarioId = localStorage.getItem('selectedUser')
       axios
-        .get(`https://calculadora-be.herokuapp.com/users/deudas/${usuarioId}`, {
+        .get(`http://localhost:3020/users/deudas/${usuarioId}`, {
         })
         .catch(function (error) {
           console.log(error.response.data.data);

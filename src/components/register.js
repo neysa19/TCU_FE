@@ -44,7 +44,7 @@ export default function SignUp() {
         if (data.get('email').includes('est.utn.ac.cr')) {
             try {
                 axios
-                    .post("https://calculadora-be.herokuapp.com/users", {
+                    .post("http://localhost:3020/users", {
                         email: data.get('email'),
                         name: data.get('firstName'),
                         first_last_name: data.get('lastName'),

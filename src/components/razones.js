@@ -28,7 +28,7 @@ export default function Razones() {
     const handleFormSubmit = ({ nombre, calculo, observacion, descripcion }) => {
         try {
             axios
-                .post("https://calculadora-be.herokuapp.com/users/razones", {
+                .post("http://localhost:3020/users/razones", {
                     user: localStorage.getItem('usuarioId'),
                     descripcion: descripcion,
                     nombre: nombre,
@@ -56,7 +56,7 @@ export default function Razones() {
         try {
             const usuarioId = localStorage.getItem('usuarioId')
             axios
-                .get(`https://calculadora-be.herokuapp.com/users/razones/${usuarioId}`, {
+                .get(`http://localhost:3020/users/razones/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);

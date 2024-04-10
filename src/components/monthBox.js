@@ -1,21 +1,20 @@
-
 import React from 'react';
-import Container from '@mui/material/Container';
-
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { Container, Row, Col } from 'react-bootstrap';
+
 
 
 export default function MonthBox({ transactions, month }) {
 
     const getSalariosByMonth = () => {
-        const filteredData = transactions.filter((item) => item.description === "Salario Neto" && item.month === month);
-        return filteredData;
+        return transactions.filter((item) => item.description === "Salario Neto" && item.month === month);
+
     }
     const getOtrosIngresosByMonth = () => {
 
-        const filteredData = transactions.filter((item) => item.description !== "Salario Neto" && item.month === month && item.category === "Otros Ingresos");
-        return filteredData;
+        return transactions.filter((item) => item.description !== "Salario Neto" && item.month === month && item.category === "Otros Ingresos");
+
     }
     const getTotalIngresosByMonth = () => {
         let total = 0;
@@ -35,8 +34,8 @@ export default function MonthBox({ transactions, month }) {
     }
     const getAhorrosByMonth = () => {
 
-        const filteredData = transactions.filter((item) => item.month === month && item.category === "Ahorro");
-        return filteredData;
+        return transactions.filter((item) => item.month === month && item.category === "Ahorro");
+       
     }
     const getTotalAhorrosByMonth = () => {
 
@@ -50,8 +49,8 @@ export default function MonthBox({ transactions, month }) {
     }
     const getDeudasByMonth = () => {
 
-        const filteredData = transactions.filter((item) => item.month === month && item.category === "Deudas");
-        return filteredData;
+        return transactions.filter((item) => item.month === month && item.category === "Deudas");
+        
     }
     const getTotalDeudasByMonth = () => {
 
@@ -65,8 +64,8 @@ export default function MonthBox({ transactions, month }) {
     }
     const getGastosRecurrentesByMonth = () => {
 
-        const filteredData = transactions.filter((item) => item.month === month && item.category === "Gastos Recurrentes");
-        return filteredData;
+        return transactions.filter((item) => item.month === month && item.category === "Gastos Recurrentes");
+       
     }
     const getTotalGastosRecurrentesByMonth = () => {
         let total = 0;
@@ -103,98 +102,58 @@ export default function MonthBox({ transactions, month }) {
 
     return (
         <Container>
-            <Box>
-                <Box sx={{ border: 1, borderRadius: '16px' }} style={{ textAlign: 'center' }}>
-                    <Typography variant="h5" >{month}</Typography>
-                    <Box sx={{ borderTop: 1 }} >
-                        <Box sx={{ bgcolor: "lightgray" }} >
-                            <Typography variant="h6" >
-                                Ingresos Netos
-                            </Typography>
-                        </Box>
-                        <Box>
-                            {getSalariosByMonth().map((ingreso) =>
-                                <Typography sx={{ m: 1 }}>
-                                    {ingreso.description}: {ingreso.amount}
-                                </Typography>)}
-                            <Typography sx={{ m: 1 }}>
-                                Otros ingresos:
-                            </Typography>
-                            {getOtrosIngresosByMonth().map((ingreso) =>
-                                <Typography sx={{ m: 1 }}>
-                                    {ingreso.description}: {ingreso.amount}
-                                </Typography>)}
-
-                            <Typography sx={{ m: 1, fontWeight: 'bold' }}>
-                                Total ingresos:
-                                {getTotalIngresosByMonth()}
-                            </Typography>
-                        </Box>
-                    </Box>
-
-                    <Box sx={{ borderTop: 1 }}>
-                        <Box sx={{ bgcolor: "lightgray" }}>
-                            <Typography variant="h6" >
-                                Casilla del ahorro
-                            </Typography>
-                        </Box>
-                        {getAhorrosByMonth().map((ahorro) =>
-                            <Typography sx={{ m: 1 }}>
-                                {ahorro.description}: {ahorro.amount}
-                            </Typography>)}
-                            <Typography sx={{ m: 1, fontWeight: 'bold' }}>
-                            Total de ahorros:
-                            {getTotalAhorrosByMonth()}
-                        </Typography>
-                    </Box>
-
-                    <Box sx={{ borderTop: 1 }}>
-                        <Box sx={{ bgcolor: "lightgray" }}>
-
-                            <Typography variant="h6" >
-                                Casilla de las deudas
-                            </Typography>
-                        </Box>
-                        {getDeudasByMonth().map((deuda) =>
-                            <Typography sx={{ m: 1 }}>
-                                {deuda.description}: {deuda.amount}
-                            </Typography>)}
-                        <Typography sx={{ m: 1, fontWeight: 'bold' }}>
-                            Total de deudas:
-                            {getTotalDeudasByMonth()}
-                        </Typography>
-                    </Box>
-
-                    <Box sx={{ borderTop: 1 }}>
-                        <Box sx={{ bgcolor: "lightgray" }}>
-
-                            <Typography variant="h6"  >
-                                Gastos Recurrentes
-                            </Typography>
-                        </Box>
-                        {getGastosRecurrentesByMonth().map((gasto) =>
-                            <Typography sx={{ m: 1}}>
-                                {gasto.description}: {gasto.amount}
-                            </Typography>)}
-                        <Typography sx={{ m: 1, fontWeight: 'bold' }}>
-                            Total de Gastos:
-                            {getTotalGastosRecurrentesByMonth()}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ border: 1, bgcolor: getCasillaFelizColor(),  borderRadius: '16px' }}>
-                        <Box sx={{ bgcolor: getCasillaFelizColor(),  borderRadius: '16px' }}>
-                            <Typography variant="h6" >
-                                Casilla Feliz
-                            </Typography>
-                        </Box>
-
-                        <Typography variant="h5" sx={{ m: 1, fontWeight: 'bold' }}>
-                            {getCasillaFeliz()}
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
-        </Container>
+        <div style={{ border: '1px solid', borderRadius: '16px', textAlign: 'center' }}>
+            <h5>{month}</h5>
+            <div style={{ borderTop: '1px solid' }}>
+                <div style={{ backgroundColor: 'lightgray' }}>
+                    <h6>Ingresos Netos</h6>
+                </div>
+                <div>
+                    {getSalariosByMonth().map((ingreso, index) => (
+                        <p key={index}>{ingreso.description}: {ingreso.amount}</p>
+                    ))}
+                    <p>Otros ingresos:</p>
+                    {getOtrosIngresosByMonth().map((ingreso, index) => (
+                        <p key={index}>{ingreso.description}: {ingreso.amount}</p>
+                    ))}
+                    <p style={{ fontWeight: 'bold', marginLeft: '50%' }}>Total ingresos: ₡{getTotalIngresosByMonth()}</p>
+                </div>
+            </div>
+            <div style={{ borderTop: '1px solid' }}>
+                <div style={{ backgroundColor: 'lightgray' }}>
+                    <h6>Ahorro</h6>
+                </div>
+                {getAhorrosByMonth().map((ahorro, index) => (
+                    <p key={index}>{ahorro.description}: {ahorro.amount}</p>
+                ))}
+                <p style={{ fontWeight: 'bold', marginLeft: '50%' }}>Total de ahorros: ₡{getTotalAhorrosByMonth()}</p>
+            </div>
+            <div style={{ borderTop: '1px solid' }}>
+                <div style={{ backgroundColor: 'lightgray' }}>
+                    <h6>Deudas</h6>
+                </div>
+                {getDeudasByMonth().map((deuda, index) => (
+                    <p key={index}>{deuda.description}: {deuda.amount}</p>
+                ))}
+                <p style={{ fontWeight: 'bold', marginLeft: '50%' }}>Total de deudas: ₡{getTotalDeudasByMonth()}</p>
+            </div>
+            <div style={{ borderTop: '1px solid' }}>
+                <div style={{ backgroundColor: 'lightgray' }}>
+                    <h6>Gastos Recurrentes</h6>
+                </div>
+                {getGastosRecurrentesByMonth().map((gasto, index) => (
+                    <p key={index}>{gasto.description}: {gasto.amount}</p>
+                ))}
+                <p style={{ fontWeight: 'bold', marginLeft: '50%' }}>Total de Gastos: ₡{getTotalGastosRecurrentesByMonth()}</p>
+            </div>
+            <div style={{ border: '2px solid', backgroundColor: getCasillaFelizColor(), borderRadius: '16px' }}>
+                <div style={{ backgroundColor: getCasillaFelizColor(), borderRadius: '16px' }}>
+                    
+                </div>
+                <h5 style={{ fontWeight: 'bold' }}>₡{getCasillaFeliz()}</h5>
+            </div>
+        </div>
+    </Container>
 
     );
 }

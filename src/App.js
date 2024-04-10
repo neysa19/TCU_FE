@@ -4,7 +4,8 @@ import Home from './components/home.js';
 import Account from './components/Account/account.js';
 import ProtectedRoutes from './helpers/Auth.js';
 import Login from './components/login.js';
-import Register from './components/register.js'
+import Register from './components/register.js';
+import './App.css';
 function App() {
   return (
     <>

@@ -28,7 +28,7 @@ export default function Presupuesto() {
         try {
             const usuarioId = localStorage.getItem('usuarioId')
             axios
-                .get(`https://calculadora-be.herokuapp.com/users/transactions/${usuarioId}`, {
+                .get(`http://localhost:3020/users/transactions/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);
@@ -49,7 +49,7 @@ export default function Presupuesto() {
     const handleFormSubmit = ({ amount, description, category, month }) => {
         try {
             axios
-                .post("https://calculadora-be.herokuapp.com/users/transactions", {
+                .post("http://localhost:3020/users/transactions", {
                     user: localStorage.getItem('usuarioId'),
                     description: description,
                     tab: "presupuesto",

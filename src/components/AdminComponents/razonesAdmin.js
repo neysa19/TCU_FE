@@ -34,7 +34,7 @@ export default function Razones(props) {
         try {
             const usuarioId = localStorage.getItem('selectedUser')
             axios
-                .get(`https://calculadora-be.herokuapp.com/users/razones/${usuarioId}`, {
+                .get(`http://localhost:3020/users/razones/${usuarioId}`, {
                 })
                 .catch(function (error) {
                     console.log(error.response.data.data);

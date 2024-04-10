@@ -20,7 +20,7 @@ export default function PlanDeuda() {
   const handleFormSubmit = ({ emisor, saldoActual, tasaActual, plazoActual, descripcion, ponderado_tasa, ponderado_plazo }) => {
     try {
       axios
-        .post("https://calculadora-be.herokuapp.com/users/deudas", {
+        .post("http://localhost:3020/users/deudas", {
           user: localStorage.getItem('usuarioId'),
           emisor: emisor,
           saldoActual: saldoActual,
@@ -51,7 +51,7 @@ export default function PlanDeuda() {
     try {
       const usuarioId = localStorage.getItem('usuarioId')
       axios
-        .get(`https://calculadora-be.herokuapp.com/users/deudas/${usuarioId}`, {
+        .get(`http://localhost:3020/users/deudas/${usuarioId}`, {
         })
         .catch(function (error) {
           console.log(error.response.data.data);
